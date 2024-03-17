@@ -4,7 +4,7 @@ import streamlit as st
 #import pandas as pd
 #import plotly.express as px
 
-import datadotworld as dw
+#import datadotworld as dw
 
 st.title('DbAcademic .... ')
 
