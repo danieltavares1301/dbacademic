@@ -1,0 +1,4 @@
+plotly==5.19.0
+pandas==2.2.1
+requests==2.31.0
+datadotworld==1.8.5
