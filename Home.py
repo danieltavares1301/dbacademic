@@ -1,51 +1,32 @@
-
 import streamlit as st
 
-import datadotworld as dw
+# Configuração básica da página (pode manter a do seu app principal se quiser)
+st.set_page_config(
+    page_title="Painel Acadêmico Brasileiro",
+    page_icon="🎓",
+    layout="wide"
+)
 
-st.title('DbAcademic .... ')
+# HOME SIMPLES
+st.markdown("""
+# 🎓 Painel Acadêmico Brasileiro
 
-st.sidebar.title('Filtros')
-nome_curso = st.sidebar.text_input("Nome do Curso")
+Bem-vindo(a) ao **Painel Acadêmico Brasileiro**!
 
+Este aplicativo apresenta uma análise interativa de dados de **cursos** e **docentes** das universidades brasileiras, utilizando dados abertos conectados do [DbAcademic](https://data.world/) e [DBpedia](https://dbpedia.org/).
 
-ds = dw.load_dataset('dbacademic/dbacademic', force_update=True)
+Aqui você pode:
 
-sparql_docentes = '''
-prefix ccso: <https://w3id.org/ccso/ccso#> 
-PREFIX dbp: <http://pt.dbpedia.org/property/>
-PREFIX dbo: <http://dbpedia.org/ontology/>
-prefix foaf: <http://xmlns.com/foaf/0.1/>
+- Visualizar a distribuição de cursos por universidade, estado e região.
+- Consultar rankings dos cursos mais ofertados.
+- Explorar o perfil dos docentes por estado, formação acadêmica e gênero.
+- Comparar indicadores de diferentes regiões e instituições.
 
-SELECT ?o (count (DISTINCT ?s) as ?qtdocente) where {
+Navegue pelo menu lateral para acessar as diferentes análises e dashboards disponíveis.
 
-    ?s a ccso:ProgramofStudy.
-    ?s ccso:belongsTo ?o.
+---
 
-}
-GROUP BY ?o
+💡 **Dica:** Clique nas opções do menu à esquerda para começar!
 
-'''
-
-sparql = f"""
-PREFIX : <https://dbacademic.linked.data.world/d/dbacademic/>
-PREFIX ds-institutos: <https://dbacademic.linked.data.world/d/institutos/>
-PREFIX ds-universidades: <https://dbacademic.linked.data.world/d/universidades/>
-prefix ccso: <https://w3id.org/ccso/ccso#>
-
-SELECT ?name (COUNT(distinct ?cursos) AS ?qtcursos)
-
-WHERE {{
-      ?cursos a ccso:ProgramofStudy.
-      ?cursos  ccso:psName ?name.
-
-       FILTER regex(?name, "{nome_curso}", "i" )
-}}
-
-GROUP BY ?name
-"""
-
-results = dw.query('dbacademic/dbacademic', sparql, query_type='sparql')
-df = results.dataframe.sort_values("qtcursos",ascending=False)
-
-st.dataframe(df.head(10))
+---
+""")
