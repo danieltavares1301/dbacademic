@@ -1,13 +1,11 @@
 import streamlit as st
 
-# Configuração básica da página (pode manter a do seu app principal se quiser)
 st.set_page_config(
     page_title="Painel Acadêmico Brasileiro",
     page_icon="🎓",
     layout="wide"
 )
 
-# HOME SIMPLES
 st.markdown("""
 # 🎓 Painel Acadêmico Brasileiro
 
